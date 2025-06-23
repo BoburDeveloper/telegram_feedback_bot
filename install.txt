@@ -1,0 +1,125 @@
+===============================
+Laravel Telegram Feedback System
+INSTALLATION GUIDE
+===============================
+
+Thank you for purchasing this product!
+
+This system allows you to collect feedback from users via Telegram bot
+and automatically send it to your email address or Telegram group.
+
+Please follow the steps below to install and configure it on your hosting/server:
+
+-----------------------------------------------------
+1. REQUIREMENTS
+-----------------------------------------------------
+- PHP 8.1 or higher
+- Laravel 10 or higher
+- SSL-enabled web hosting (https://)
+- MySQL database
+- Composer installed (if local development)
+
+-----------------------------------------------------
+2. UPLOAD THE FILES
+-----------------------------------------------------
+- Unzip the package you downloaded.
+- Upload all files to your hosting space or server (public_html or a subfolder).
+- Make sure the `/storage`, `/bootstrap/cache` folders are writable.
+
+-----------------------------------------------------
+3. CREATE DATABASE
+-----------------------------------------------------
+- Create a new MySQL database via cPanel or your hosting panel.
+- Remember the database name, username, and password.
+
+-----------------------------------------------------
+4. CONFIGURE ENVIRONMENT
+-----------------------------------------------------
+- Copy the file `.env.example` and rename it to `.env`
+- Open `.env` and set your values:
+
+    APP_NAME=TelegramFeedback
+    APP_URL=https://yourdomain.com
+
+    DB_DATABASE=your_database
+    DB_USERNAME=your_db_user
+    DB_PASSWORD=your_db_pass
+
+    TELEGRAPH_DOMAIN=https://yourdomain.com
+
+    MAIL_MAILER=smtp
+    MAIL_HOST=mail.yourdomain.com
+    MAIL_PORT=587
+    MAIL_USERNAME=info@yourdomain.com
+    MAIL_PASSWORD=your_email_password
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS=info@yourdomain.com
+    MAIL_FROM_NAME="Telegram Bot"
+
+-----------------------------------------------------
+5. INSTALL DATABASE TABLES
+-----------------------------------------------------
+If your server has SSH access:
+
+    php artisan migrate
+
+If not — contact your hosting support or import the included `SQL` manually (if provided).
+
+-----------------------------------------------------
+6. SET APP KEY
+-----------------------------------------------------
+If you have SSH access, run:
+
+    php artisan key:generate
+
+This is required to enable Laravel encryption.
+
+-----------------------------------------------------
+7. SET FILE PERMISSIONS
+-----------------------------------------------------
+- Make sure these folders are writable:
+
+    /storage
+    /bootstrap/cache
+
+Usually 755 or 775 is enough.
+
+-----------------------------------------------------
+8. LOGIN TO ADMIN PANEL
+-----------------------------------------------------
+- Open https://yourdomain.com in browser
+- You will be prompted for HTTP Basic Auth login.
+
+    Username: tbot
+    Password: tbot123
+
+(You can change this in `.env` or `basic.auth` middleware if needed.)
+
+-----------------------------------------------------
+9. ADD TELEGRAM BOT
+-----------------------------------------------------
+- After login, go to "Add Bot"
+- Paste your bot name and Telegram Bot Token
+- Click save.
+
+-----------------------------------------------------
+10. SET TELEGRAM WEBHOOK (important!)
+-----------------------------------------------------
+After bot is added, run this command in terminal:
+
+    php artisan telegraph:set-webhook {bot_id}
+
+Or use Postman to send webhook manually (see README.md)
+
+-----------------------------------------------------
+✅ DONE!
+-----------------------------------------------------
+Now your system is ready. Messages sent to your bot will:
+- Be saved
+- Sent to your Telegram group
+- Sent to your email inbox
+
+For support or issues, please check README.md or contact via Envato comments.
+
+Thank you again!
+

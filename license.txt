@@ -1,0 +1,34 @@
+=======================================================
+License Agreement - Laravel Telegram Feedback System
+=======================================================
+
+Thank you for purchasing this product from CodeCanyon.
+
+This product is licensed under the Envato Market terms of use:
+https://codecanyon.net/licenses
+
+-----------------------------
+Regular License Summary:
+-----------------------------
+✔ You can use this product in ONE personal or commercial project.
+✔ You may modify the code for your own use.
+✘ You may NOT redistribute, resell, or share the code or files.
+✘ You may NOT use this product in multiple client projects.
+
+-----------------------------
+Extended License Summary:
+-----------------------------
+✔ You may use this product in ONE end product where users are charged (e.g. SaaS).
+✔ You may modify the code.
+✘ You may NOT resell or distribute this product as a script or template.
+
+-----------------------------
+Support & Attribution
+-----------------------------
+This product is provided "as-is" without guarantee.
+If you need installation or technical support, please contact the author via Envato.
+
+For more details:
+https://codecanyon.net/licenses/standard
+
+Thank you for respecting the license.
