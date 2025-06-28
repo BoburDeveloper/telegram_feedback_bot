@@ -55,6 +55,8 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'info@jobresume.uz'),
         'name' => env('MAIL_FROM_NAME', 'JobResume Bot'),
     ],
+	
+	'feedback_recipient'=>env('MY_EMAIL'),
 
     /*
     |--------------------------------------------------------------------------

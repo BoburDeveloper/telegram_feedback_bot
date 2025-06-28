@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentation - Laravel Telegram Feedback & Email System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; color: #333; }
+    h1, h2, h3 { color: #0d6efd; }
+    code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+    .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    ul { line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Laravel Telegram Feedback & Email System</h1>
+    <p>Thank you for purchasing this script! Below are the setup instructions and usage guide.</p>
+
+    <h2>📦 Installation</h2>
+    <ol>
+      <li>Unzip the project into your Laravel folder.</li>
+      <li>Run <code>composer install</code> in terminal.</li>
+      <li>Copy <code>.env.example</code> to <code>.env</code> and configure your database and mail settings.</li>
+      <li>Run <code>php artisan migrate</code> to create the required tables.</li>
+      <li>Set your Telegram bot webhook:
+        <br><code>php artisan telegraph:set-webhook {your_bot_id}</code>
+      </li>
+      <li>Launch the application:
+        <br><code>php artisan serve</code>
+      </li>
+      <li>Access: <a href="http://127.0.0.1:8000" target="_blank">http://127.0.0.1:8000</a></li>
+    </ol>
+
+    <h2>🤖 Telegram Bot Setup</h2>
+    <ul>
+      <li>Create a bot via <a href="https://t.me/BotFather" target="_blank">BotFather</a>.</li>
+      <li>Copy the token and paste it into the admin panel form.</li>
+      <li>To receive messages in a group, add your bot to the group and send any message.</li>
+      <li>After that, your group <code>chat_id</code> will be captured automatically.</li>
+      <li>Make sure your bot has admin rights in the group.</li>
+    </ul>
+
+    <h2>📧 Email Notification</h2>
+    <ul>
+      <li>Set your SMTP details in <code>.env</code> file:</li>
+    </ul>
+    <pre>
+	
+APP_URL=https://example.domain	
+	
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+MAIL_FROM_ADDRESS=admin@example.com
+MAIL_FROM_NAME="JobResume Bot"
+
+MY_GROUP_ID=-1001234567890
+MY_EMAIL=admin@example.com
+    </pre>
+
+    <h2>🔐 Security Notes</h2>
+    <ul>
+      <li>Bot tokens are masked in the admin interface.</li>
+      <li>Email is only sent to addresses defined in your <code>.env</code> file.</li>
+    </ul>
+
+    <h2>📌 Requirements</h2>
+    <ul>
+	  <li>SSL enabled domain</li>
+      <li>Laravel 10 or 11</li>
+      <li>PHP 8.1+</li>
+      <li>MySQL or PostgreSQL database</li>
+      <li>Valid Telegram bot token</li>
+    </ul>
+
+    <h2>📞 Support</h2>
+    <p>If you have any questions or need support, contact: <code>admin@example.com</code></p>
+
+    <p>Thank you again for your purchase!</p>
+  </div>
+</body>
+</html>

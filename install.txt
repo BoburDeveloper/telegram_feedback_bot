@@ -1,125 +1,84 @@
-===============================
-Laravel Telegram Feedback System
 INSTALLATION GUIDE
-===============================
+==================
 
-Thank you for purchasing this product!
+Product: Laravel Telegram Feedback & Email Notification System  
+Version: 1.0.0  
+Author: Boburbek Ziyodullaev (UBSoftware)  
+Support: https://codecanyon.net/user/ubsoftware
 
-This system allows you to collect feedback from users via Telegram bot
-and automatically send it to your email address or Telegram group.
+------------------------------------------------------
+✅ SYSTEM REQUIREMENTS
+------------------------------------------------------
 
-Please follow the steps below to install and configure it on your hosting/server:
-
------------------------------------------------------
-1. REQUIREMENTS
------------------------------------------------------
 - PHP 8.1 or higher
-- Laravel 10 or higher
-- SSL-enabled web hosting (https://)
-- MySQL database
-- Composer installed (if local development)
+- Composer
+- Laravel 11
+- MySQL / MariaDB
+- OpenSSL, cURL, mbstring enabled
+- A valid Telegram Bot Token
+- Access to a Telegram Group Chat (optional)
 
------------------------------------------------------
-2. UPLOAD THE FILES
------------------------------------------------------
-- Unzip the package you downloaded.
-- Upload all files to your hosting space or server (public_html or a subfolder).
-- Make sure the `/storage`, `/bootstrap/cache` folders are writable.
+------------------------------------------------------
+🛠 INSTALLATION STEPS
+------------------------------------------------------
 
------------------------------------------------------
-3. CREATE DATABASE
------------------------------------------------------
-- Create a new MySQL database via cPanel or your hosting panel.
-- Remember the database name, username, and password.
+1. Unzip the downloaded package to your server directory.
 
------------------------------------------------------
-4. CONFIGURE ENVIRONMENT
------------------------------------------------------
-- Copy the file `.env.example` and rename it to `.env`
-- Open `.env` and set your values:
+2. Navigate to the project root via terminal:
+   cd your-project-folder
 
-    APP_NAME=TelegramFeedback
-    APP_URL=https://yourdomain.com
+3. Install PHP dependencies using Composer:
+   composer install
 
-    DB_DATABASE=your_database
-    DB_USERNAME=your_db_user
-    DB_PASSWORD=your_db_pass
+4. Copy the example environment file and configure it:
+   cp .env.example .env
 
-    TELEGRAPH_DOMAIN=https://yourdomain.com
+5. Generate the application key:
+   php artisan key:generate
 
-    MAIL_MAILER=smtp
-    MAIL_HOST=mail.yourdomain.com
-    MAIL_PORT=587
-    MAIL_USERNAME=info@yourdomain.com
-    MAIL_PASSWORD=your_email_password
-    MAIL_ENCRYPTION=tls
-    MAIL_FROM_ADDRESS=info@yourdomain.com
-    MAIL_FROM_NAME="Telegram Bot"
+6. Open `.env` file and update the following values:
 
------------------------------------------------------
-5. INSTALL DATABASE TABLES
------------------------------------------------------
-If your server has SSH access:
+   APP_NAME=FeedbackBot
+   APP_URL=https://yourdomain.com
 
-    php artisan migrate
+   DB_DATABASE=your_database
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
 
-If not — contact your hosting support or import the included `SQL` manually (if provided).
+   TELEGRAPH_BOT_TOKEN=your_telegram_bot_token
+   MY_GROUP_ID=-1001234567890
+   MY_EMAIL=admin@example.com
 
------------------------------------------------------
-6. SET APP KEY
------------------------------------------------------
-If you have SSH access, run:
+7. Run the database migrations:
+   php artisan migrate
 
-    php artisan key:generate
+8. Set up the Telegram webhook:
+   php artisan telegraph:set-webhook {bot_id}
 
-This is required to enable Laravel encryption.
+   Example:
+   php artisan telegraph:set-webhook 1
 
------------------------------------------------------
-7. SET FILE PERMISSIONS
------------------------------------------------------
-- Make sure these folders are writable:
+9. Access the web interface in your browser:
+   https://yourdomain.com/
 
-    /storage
-    /bootstrap/cache
+   Add your Telegram bot via the form.
 
-Usually 755 or 775 is enough.
+10. Done! Your feedback system is now ready.
 
------------------------------------------------------
-8. LOGIN TO ADMIN PANEL
------------------------------------------------------
-- Open https://yourdomain.com in browser
-- You will be prompted for HTTP Basic Auth login.
+------------------------------------------------------
+📬 TESTING
+------------------------------------------------------
 
-    Username: tbot
-    Password: tbot123
+- Open your Telegram bot and type any message.
+- The message will appear in the group and admin email.
+- You can reply to the forwarded message (which contains #ID{number}#) directly in Telegram — the bot will respond to the user automatically.
 
-(You can change this in `.env` or `basic.auth` middleware if needed.)
+------------------------------------------------------
+💬 SUPPORT
+------------------------------------------------------
 
------------------------------------------------------
-9. ADD TELEGRAM BOT
------------------------------------------------------
-- After login, go to "Add Bot"
-- Paste your bot name and Telegram Bot Token
-- Click save.
+For any issues, questions, or customization requests, please use the support section on the product page or contact via Envato profile.
 
------------------------------------------------------
-10. SET TELEGRAM WEBHOOK (important!)
------------------------------------------------------
-After bot is added, run this command in terminal:
+Thank you for using our product!
 
-    php artisan telegraph:set-webhook {bot_id}
-
-Or use Postman to send webhook manually (see README.md)
-
------------------------------------------------------
-✅ DONE!
------------------------------------------------------
-Now your system is ready. Messages sent to your bot will:
-- Be saved
-- Sent to your Telegram group
-- Sent to your email inbox
-
-For support or issues, please check README.md or contact via Envato comments.
-
-Thank you again!
-
+- UBSoftware Team

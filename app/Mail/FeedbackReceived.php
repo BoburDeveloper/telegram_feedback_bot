@@ -22,7 +22,7 @@ class FeedbackReceived extends Mailable
 
     public function build()
     {
-        return $this->subject('📩 New Telegram Feedback')
+        return $this->subject(trans('messages.new_telegram_feedback'))
             ->view('emails.feedback_received');
     }
 }

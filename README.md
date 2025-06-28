@@ -1,77 +1,82 @@
-# 📬 Laravel Telegram Feedback & Email Notifier System
+Laravel Telegram Feedback & Email Notification System
+=====================================================
 
-A clean and secure feedback collection system via Telegram Bot with automatic email notifications. Easily integrate a Telegram bot with your Laravel application, collect messages from users, and get them delivered directly to your email.
+A lightweight Laravel-based feedback system that allows users to send feedback messages via Telegram bot and delivers those messages to both Telegram groups and admin email inbox. Ideal for small businesses, startups, customer support teams, and Telegram-based services.
 
----
+-----------------------------------------------------
+🚀 Features
+-----------------------------------------------------
 
----
+- Telegram Bot integration via defstudio/telegraph
+- User-friendly admin panel to add/edit bots
+- Receives feedback messages via Telegram
+- Stores messages in database
+- Sends responses back to users via Telegram
+- Forwards all messages to a Telegram group
+- Sends email notifications to admin
+- Laravel 11 compatible
 
-This product is sold under Envato Regular License.
+-----------------------------------------------------
+📂 Folder Structure
+-----------------------------------------------------
 
-## 🚀 Features
+/app/Http/Controllers/Telegrambot.php
+/app/Models/FeedbackRequest.php
+/app/Models/FeedbackResponse.php
+/resources/views/telegrambot/index.blade.php
+/routes/web.php
+...
 
-- 🔐 **Secure admin panel** (HTTP Basic Auth)
-- 🤖 Add/edit your own Telegram bots in admin interface
-- 📨 Collect feedback messages via Telegram bot
-- 📧 Automatically send messages to your email
-- 👥 Automatically forward messages to your Telegram group
-- 🔄 Reply to user feedback via Telegram group (automatic delivery)
-- 🧼 Clean codebase following Laravel standards
-- 📦 Quick installation with `.env.example`
+-----------------------------------------------------
+🛠 Installation
+-----------------------------------------------------
 
----
+Please refer to the install.txt file for step-by-step instructions.
 
-## ⚠ Important Notice
+Basic steps:
+1. Clone or unzip the project.
+2. Run `composer install`.
+3. Configure your `.env` file (Telegram Bot Token, Email, DB, etc).
+4. Run migrations with `php artisan migrate`.
+5. Set webhook via `php artisan telegraph:set-webhook {bot_id}`.
+6. Access `/` to add your bot via UI.
 
-> 🛠 The admin panel is designed **only for managing your Telegram bots** (adding/editing token & name).  
-> ❌ It does not store or display feedback messages in the interface.  
-> All feedback is delivered via **Telegram group and email only**.
+-----------------------------------------------------
+⚙️ Environment Variables
+-----------------------------------------------------
 
----
+MY_GROUP_ID=-1001234567890
+MY_EMAIL=your_email@example.com
+TELEGRAM_BOT_TOKEN=xxx:yyy
 
-## 📋 Requirements
+-----------------------------------------------------
+💬 Feedback Format
+-----------------------------------------------------
 
-- PHP 8.2 or newer
-- Laravel 11 or newer
-- SSL-enabled web server (HTTPS is required for Telegram webhook)
-- Working mail configuration (SMTP or `mail()`)
+- All messages are stored in the `feedback_requests` table.
+- Admin can reply via Telegram by replying to the forwarded message (includes #ID{id}#).
+- The system will automatically send response back to user and mark the message as answered.
 
----
+-----------------------------------------------------
+🧑‍💻 Dependencies
+-----------------------------------------------------
 
-## 📦 What's Included?
+- Laravel 11+
+- defstudio/telegraph
+- Bootstrap 5 (UI)
+- Mail (default PHP or SMTP supported)
 
-- Full Laravel project
-- Admin UI for managing Telegram bots
-- Email + Telegram group delivery
-- Telegram webhook integration via `defstudio/telegraph`
-- Example `.env` configuration
-- Installation guide (`install.txt`)
-- MIT or Regular license
+-----------------------------------------------------
+📄 License
+-----------------------------------------------------
 
----
+This project is open-sourced under the MIT license (see license.txt)
 
-## 🔧 Installation
+-----------------------------------------------------
+🙏 Credits
+-----------------------------------------------------
 
-1. Upload the project to your server
-2. Run `composer install`
-3. Copy `.env.example` to `.env` and fill in your values
-4. Run `php artisan key:generate`
-5. Run `php artisan migrate`
-6. Visit the project in browser – it will be protected with HTTP Basic Auth
-7. Log in, add your Telegram bot, and enjoy!
+Developed by Boburbek Ziyodullaev
+https://codecanyon.net/user/ubsoftware
 
----
-
-## 📞 Support
-
-If you need help installing or setting up, feel free to contact us via the comments section or your CodeCanyon dashboard.
-
----
-
-## 👮 License
-
-This project is sold under the Envato Regular License. You are not allowed to resell, redistribute, or sublicense it outside of Envato.
-
----
-
-Thank you for purchasing!
+For support, please open a comment under the item or contact via Envato profile.

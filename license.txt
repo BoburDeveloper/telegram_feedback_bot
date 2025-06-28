@@ -1,34 +1,21 @@
-=======================================================
-License Agreement - Laravel Telegram Feedback System
-=======================================================
+MIT License
 
-Thank you for purchasing this product from CodeCanyon.
+Copyright (c) 2025 UBSoftware
 
-This product is licensed under the Envato Market terms of use:
-https://codecanyon.net/licenses
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights  
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+copies of the Software, and to permit persons to whom the Software is  
+furnished to do so, subject to the following conditions:
 
------------------------------
-Regular License Summary:
------------------------------
-✔ You can use this product in ONE personal or commercial project.
-✔ You may modify the code for your own use.
-✘ You may NOT redistribute, resell, or share the code or files.
-✘ You may NOT use this product in multiple client projects.
+The above copyright notice and this permission notice shall be included in  
+all copies or substantial portions of the Software.
 
------------------------------
-Extended License Summary:
------------------------------
-✔ You may use this product in ONE end product where users are charged (e.g. SaaS).
-✔ You may modify the code.
-✘ You may NOT resell or distribute this product as a script or template.
-
------------------------------
-Support & Attribution
------------------------------
-This product is provided "as-is" without guarantee.
-If you need installation or technical support, please contact the author via Envato.
-
-For more details:
-https://codecanyon.net/licenses/standard
-
-Thank you for respecting the license.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN  
+THE SOFTWARE.
