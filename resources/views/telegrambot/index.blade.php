@@ -56,6 +56,7 @@
         <h5 class="col-12"><i class="fab fa-telegram-plane"></i> Telegram chat for demonstration: <a href="https://t.me/+piYBBPeMv2VkMzYy"><i class="fas fa-link"></i> https://t.me/+piYBBPeMv2VkMzYy</a></h5>
         <h5 class="col-12"><i class="fas fa-envelope"></i> Email for notification will set manually on .env file</a></h5>
         <h5 class="col-12"><i class="fas fa-database"></i> chat_id will append to DB after first messaging with the bot or adding the bot to your group</a></h5>
+        <h5 class="col-12"><i class="fas fa-comments"></i> You should get exactly chat_id from DB and set to MY_GROUP_ID on `.env` file which you want to make feedback environment</a></h5>
         <h5 class="col-12"><i class="fas fa-robot"></i> After adding the bot to the group you should give it admin role for working properly</a></h5>
 </div>
 

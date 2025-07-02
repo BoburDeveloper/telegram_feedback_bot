@@ -11,6 +11,6 @@
 @yield('content')
 
 <footer></footer>
-<script type="text/javascript" src="{{asset($asset_theme.'bootstrap-ui/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset($asset_theme.'libs/bootstrap-ui/js/bootstrap.min.js')}}"></script>
 </body>
 </html>
