@@ -2,8 +2,6 @@
 
 @section('content')
 
-	<link rel="stylesheet" href="{{asset($asset_theme.'libs/fontawesome/css/all.min.css')}}" />
-
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold"><i class="fab fa-telegram"></i> {{ __('messages.my_tbot') }}</h2>
@@ -21,6 +19,16 @@
     @if (session('info'))
         <div class="alert alert-info">{{ session('info') }}</div>
     @endif
+    
+    @if($errors->all())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <table class="table table-striped table-bordered shadow-sm">
         <thead class="table-light">
@@ -30,6 +38,7 @@
                 <th>{{ __('messages.tbot_username') }}</th>
                 <th>{{ __('messages.tbot_token') }}</th>
                 <th>{{ __('messages.tbot_api_url') }}</th>
+                <th>{{ __('messages.message') }}</th>
                 <th>{{ __('messages.edit') }}</th>
             </tr>
         </thead>
@@ -41,6 +50,11 @@
                     <td>{{ $bot->username }}</td>
                     <td><span class="token-mask">••••••••••••</span></td>
                     <td><a href="{{env('APP_URL')}}/api/telegraph/{{$bot->token}}/handle" class="btn btn-secondary btn-sm"><i class="fas fa-link"></i> Visit</a></span></td>
+                     <td>
+                        <a href="javascript:void(0);" class="btn btn-success btn-sm messaging-form" data-action="messaging" data-id="{{ $bot->id }}" data-bs-toggle="modal" data-bs-target="#tgBotMessagingModal">
+                            <i class="fa fa-envelope"></i> {{ __('messages.message') }}
+                        </a>
+                    </td>
                     <td>
                         <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm open-form" data-action="edit" data-id="{{ $bot->id }}" data-bs-toggle="modal" data-bs-target="#tgBotModal">
                             <i class="fa fa-edit"></i> {{ __('messages.edit') }}
@@ -77,6 +91,23 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="tgBotMessagingModal" tabindex="-1" aria-labelledby="tgBotMessagingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tgBotModalLabel">Bot Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
     $(document).ready(function(){
         $('.open-form').on('click', function() {
@@ -87,6 +118,24 @@
             $.ajax({
                 url: '/form/' + action + '/' + id,
                 method: 'get',
+                success:function(data) {
+                    modalBody.html(data);
+                },
+                error: function() {
+                    modalBody.html('<div class="text-danger">Failed to load form.</div>');
+                }
+            });
+        });
+
+          $('.messaging-form').on('click', function() {
+            const modalBody = $('#tgBotMessagingModal .modal-body');
+            modalBody.html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
+            const id = $(this).data('id');
+            const action = $(this).data('action');
+            $.ajax({
+                url: '/form/' + action + '/' + id,
+                method: 'get',
+                data:{'messaging': true},
                 success:function(data) {
                     modalBody.html(data);
                 },

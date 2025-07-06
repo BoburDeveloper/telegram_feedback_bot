@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\FeedbackRequest;
 use App\Models\FeedbackResponse;
+use App\Models\BotMessaging;
+use App\Mail\FeedbackReceived;
+use App\Providers\AppserviceProvider;
 use DefStudio\Telegraph\Telegraph;
 use DefStudio\Telegraph\Models\TelegraphBot;
 use DefStudio\Telegraph\Models\TelegraphChat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\FeedbackReceived;
-use App\Providers\AppserviceProvider;
+use Illuminate\Support\Facades\Storage;
 
 class Telegrambot extends Controller
 {
@@ -41,10 +43,18 @@ class Telegrambot extends Controller
 	 */
     public function form(Request $request, $action, $id=0)
     {
-		
             $bot = TelegraphBot::where('id', $id)->first();
-            
+            if($action=='edit') {
+                $viewFile = 'form';
+            } else {
+                $viewFile = 'messaging';
+
+                $this->data['messagings'] = BotMessaging::orderBy('created_at', 'desc')->paginate(10); // har 10 ta bot
+
+            }
+
             if($request->post('tbot')) {
+                
 				$request->validate([
 					'tbot.name' => 'required|string|max:255',
 					'tbot.username' => 'required|string|max:255',
@@ -67,7 +77,42 @@ class Telegrambot extends Controller
                         'username'=>$request_data['username'],
                         'token' => $request_data['token'],
                     ]);
-                            return redirect('/')->with('info', 'The bot was successfully edited.');
+                        return redirect('/')->with('info', 'The bot was successfully edited.');
+                }
+
+            }
+
+            if($request->post('tbot_messaging') or $request->file('image')) {
+
+
+				$request->validate([
+					'tbot_messaging.message' => 'required|string',
+                    'tbot_messaging.caption' => 'nullable|string|max:255',
+                    'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+				]);
+
+
+                $request_data = $request->post('tbot_messaging');
+
+
+                $path = $request->file('image')->store('broadcasts', 'public');
+                $url = asset('storage/' . str_replace('public/', '', $path));
+                
+                if(isset($bot->id)) {
+                    $feedback_query = BotMessaging::create([
+                        'telegraph_bot_id' => $bot->id,
+                        'message'=>$request_data['message'],
+                        'image'=>$url,
+                        'caption'=>$request_data['caption'],
+                    ]);
+        
+                    $params = [
+                        'image'=>$url,
+                        'caption'=>$request_data['caption'],
+                        'message'=>$request_data['message'],
+                    ];
+                    $is_sent = $this->broadcast($params);
+                    return redirect('/')->with('success', 'Primary bot successfully added!');
                 }
 
             }
@@ -75,7 +120,7 @@ class Telegrambot extends Controller
             $this->data['action'] = $action;
             $this->data['bot'] = $bot;
 
-        return view('telegrambot/form', $this->data);
+        return view('telegrambot/'.$viewFile, $this->data);
     }
 
 	/**
@@ -111,6 +156,34 @@ class Telegrambot extends Controller
             return response('OK');
         }
 
+    }
+
+    private function broadcast($params) {
+            extract($params);
+            $chats = TelegraphChat::all();
+
+            foreach ($chats as $chat) {
+                  try {
+                // 4. Send Image
+                $chat->photo(asset($image), $caption)
+                     ->send();
+
+                // 5. send caption
+//                $chat->message($caption)->withHtml()->send();
+                $chat->message($caption)->send();
+
+                // 6. Send Full Text (optional)
+
+
+                $chat->message($message)->send();
+
+            } catch (\Throwable $e) {
+                \Log::error("Failed to send message to chat ID {$chat->chat_id}: " . $e->getMessage());
+                var_dump($e->getMessage());die;
+            }
+            }
+
+            return "Broadcast finished!";
     }
 
 	/**

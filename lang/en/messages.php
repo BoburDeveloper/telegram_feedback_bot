@@ -11,6 +11,16 @@ return [
     'save'=>'Save',
 	'default_welcome_message'=>'Welcome dear, leave your comments, suggestions and complaints!',
 	'new_telegram_feedback'=>'📩 New Telegram Feedback',
-	'tbot_api_url'=>'T.Bot API url'
+	'tbot_api_url'=>'T.Bot API url',
+    'message'=>'Send message',
+    'text'=>'Text',
+    'messaging_tbot'=>'Send message to T.bot',
+    'sent_messages'=>'Sent messages',
+    'upload_image'=>'Upload image',
+    'image_caption'=>'Caption for image',
+    'image'=>'Image',
+    'caption'=>'Caption',
+    'send'=>'Send',
+    'return_back'=>'Return back',
 
 ];

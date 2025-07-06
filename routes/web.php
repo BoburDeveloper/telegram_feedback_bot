@@ -6,7 +6,7 @@ use App\Http\middleware\BasicAuth;
 
 
 
-Route::get('/', ['uses'=>'App\Http\Controllers\Telegrambot@index'])->middleware(BasicAuth::class);;
+Route::get('/', ['uses'=>'App\Http\Controllers\Telegrambot@index'])->middleware(BasicAuth::class);
 
 
 Route::any('/form', ['uses'=>'App\Http\Controllers\Telegrambot@form']);
