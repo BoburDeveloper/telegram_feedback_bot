@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title></title>
+    <title>Laravel Telegram Broadcast & Feedback System with Email Notification</title>
 	
     <link rel="stylesheet" href="{{asset($asset_theme.'libs/bootstrap-ui/css/bootstrap.min.css')}}"/>
 	<link rel="stylesheet" href="{{asset($asset_theme.'libs/fontawesome/css/all.min.css')}}" />

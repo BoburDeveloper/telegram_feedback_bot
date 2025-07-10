@@ -27,7 +27,7 @@
             <div class="col-md-6">
                 @if(!request()->get('messaging'))
                     <div class="text-start">
-                        <a href="javascript:void(0);" onclick="window.history.back();" title="{{__('messages.return_back')}}" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i></a>
+                        <a href="{{env('APP_URL')}}" title="{{__('messages.return_back')}}" class="btn btn-primary"><i class="fas fa-home"></i> <i class="fas fa-long-arrow-alt-left"></i></a>
                     </div>
                 @endif
             </div>
@@ -46,34 +46,37 @@
             <i class="fas fa-envelope text-primary"></i>
             {{ __('messages.sent_messages') }}
         </h3>
+	@if(isset($messagings))
+		<table class="table table-hovered table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>{{__('messages.image')}}</th>
+					<th>{{__('messages.caption')}}</th>
+					<th>{{__('messages.text')}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				@php
+						$i=0;
+						@endphp
+							@foreach($messagings as $key => $value)
+						@php
+						$i++;
+				@endphp
+				<tr>
+					<td>{{$i}}</td>
+					<td><img src="{{$value->image}}" class="img-fluid img-td" /></td>
+					<td>{{$value->caption}}</td>
+					<td>{{$value->message}}</td>
+				</tr>
+				@endforeach
+				
 
-    <table class="table table-hovered table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>{{__('messages.image')}}</th>
-                <th>{{__('messages.caption')}}</th>
-                <th>{{__('messages.text')}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $i=0;
-            @endphp
-            @foreach($messagings as $key => $value)
-            @php
-            $i++;
-            @endphp
-            <tr>
-                <td>{{$i}}</td>
-                <td><img src="{{$value->image}}" class="img-fluid img-td" /></td>
-                <td>{{$value->caption}}</td>
-                <td>{{$value->message}}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+			</tbody>
+		</table>
         {{ $messagings->links('pagination::bootstrap-5') }}
+	@endif
 </div>
 
 @endsection
