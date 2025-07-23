@@ -1,7 +1,7 @@
 @extends('layouts.telegrambot')
 
 @section('content')
-
+    
 <div class="container py-4">
     <div class="text-center mb-4">
         <h3 class="fw-bold">
@@ -20,7 +20,7 @@
         </div>
         <div class="mb-3">
             <label for="tbot_name" class="form-label"><b>{{ __('messages.text') }}</b></label>
-            <textarea class="form-control" name="tbot_messaging[message]">{{ old('tbot_messaging.message') }}</textarea>
+            <textarea class="form-control" id="editor" name="tbot_messaging[message]">{{ old('tbot_messaging.message') }}</textarea>
         </div>
         <div class="row">
 

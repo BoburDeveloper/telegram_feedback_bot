@@ -2,3 +2,17 @@
     width: 200px;
     height: auto;
 }
+.bold{
+    font-weight: bold;
+}
+.modal-content {
+    background: linear-gradient(to right, #f8fafc, #e0f7fa);
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 14px;
+    padding: 0.75rem;
+}

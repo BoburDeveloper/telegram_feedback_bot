@@ -6,6 +6,7 @@ use App\Models\FeedbackRequest;
 use App\Models\FeedbackResponse;
 use App\Models\BotMessaging;
 use App\Mail\FeedbackReceived;
+use App\Models\VerificationCode;
 use App\Providers\AppserviceProvider;
 use DefStudio\Telegraph\Telegraph;
 use DefStudio\Telegraph\Models\TelegraphBot;
@@ -14,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class Telegrambot extends Controller
 {
@@ -24,9 +27,16 @@ class Telegrambot extends Controller
     {
         $bots = TelegraphBot::orderByDesc('created_at')->paginate(10);
 
+        $bot_messagings_num = BotMessaging::count();
+
+        $is_verified_num = VerificationCode::where(['verified'=>true])->count();
+
         return view('telegrambot.index', [
             'bots' => $bots,
             'isCreateTrue' => $bots->isEmpty(),
+            'bots_num'=>$bots->count(),
+            'bot_messagings_num'=>$bot_messagings_num,
+            'is_verified_num'=>$is_verified_num,
         ]);
     }
 
@@ -36,10 +46,26 @@ class Telegrambot extends Controller
     public function form(Request $request, $action, $id = 0)
     {
         $bot = TelegraphBot::find($id);
-        $view = in_array($action, ['edit', 'add']) ? 'form' : 'messaging';
+        if(in_array($action, ['edit', 'add'])) {
+            $view = 'form';
+        } else {
+            $view = $action;
+        }
 
         if ($action === 'messaging') {
             $this->data['messagings'] = BotMessaging::latest()->paginate(10);
+        } elseif($action === 'vc') {
+            $this->data['vc'] = DB::table('telegraph_chats')
+                    ->leftJoin('verification_codes', 'verification_codes.chat_id', '=', 'telegraph_chats.chat_id')
+                    ->select(
+                        'verification_codes.*',
+                        'telegraph_chats.chat_id',
+                        'telegraph_chats.name as chat_name',
+                        'telegraph_chats.type as chat_type',
+                        'telegraph_chats.telegraph_bot_id'
+                    )
+                    ->orderBy('verification_codes.created_at', 'desc')
+                    ->paginate(10); // ← paginate ishlatilmoqda
         }
 
         if ($request->has('tbot')) {
@@ -158,7 +184,15 @@ class Telegrambot extends Controller
             return $this->handleReply($payload, $text);
         } elseif ($text === '/start') {
             return $this->start($payload, $token);
-        } else {
+        } // 1. Agar bu kodga o‘xshagan matn bo‘lsa (masalan, 6 xonali raqam)
+        elseif ($text && preg_match('/^\d{6}$/', $text)) {
+            $chatId = $payload['message']['chat']['id'];
+            $bot = TelegraphBot::where('token', $token)->firstOrFail();
+
+            // VerificationController orqali yuborish
+            return $this->verifyCode($chatId, $text, $bot);
+        } 
+        else {
             return $this->handleNewFeedback($bot, $chat, $payload, $text);
         }
     }
@@ -220,4 +254,53 @@ class Telegrambot extends Controller
 
         return response('Feedback received', 200);
     }
+
+    /**
+     * Send verification Code.
+     */
+    public function sendCode(Request $request)
+    {
+        $chat_id = $request->input('chat_id');
+
+        $code = rand(100000, 999999);
+        $expires = now()->addMinutes(5); // 5 Expires up to 5 minutes
+
+        VerificationCode::updateOrCreate(
+            ['chat_id' => $chat_id],
+            ['code' => $code, 'expires_at' => $expires]
+        );
+
+        $chat = TelegraphChat::where('chat_id', $chat_id)->first();
+        if ($chat) {
+            $chat->message("🔐 Your verification code is: <b>$code</b>\n\n⏳ Expires at: 5 minutes")->send();
+        }
+
+        return response()->json(['message' => 'Verification code sent']);
+    }
+
+    /**
+     * Verification coming code.
+     */
+    public function verifyCode($chatId, $code, $bot)
+    {
+        $verification = VerificationCode::where('chat_id', $chatId)
+            ->first();
+
+        if ($verification->code==$code and $verification->expires_at > now()) {
+            // Code is correct, Answer will sent
+            $verification->verified = true;
+            $verification->save();
+            TelegraphChat::where('chat_id', $chatId)->first()?->message("✅ Verification successful!")->send();
+            return 1;
+        } else {
+            // Code is incorrect or expired, Answer will sent
+            $verification->verified = false;
+            $verification->save();
+            TelegraphChat::where('chat_id', $chatId)->first()?->message("❌ Invalid or expired verification code.")->send();
+            return 0;
+        }
+
+
+    }
+
 }

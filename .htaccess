@@ -1,3 +1,12 @@
+<IfModule mod_headers.c>
+    Header always unset X-Frame-Options
+    Header set X-Frame-Options "ALLOW-FROM https://www.codester.com"
+
+    Header always unset Content-Security-Policy
+    Header set Content-Security-Policy "frame-ancestors https://www.codester.com"
+</IfModule>
+
 RewriteEngine on
 RewriteCond %{REQUEST_URI} !^public
 RewriteRule ^(.*)$ public/$1 [L]
+

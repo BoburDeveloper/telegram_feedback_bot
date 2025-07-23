@@ -22,5 +22,12 @@ return [
     'caption'=>'Caption',
     'send'=>'Send',
     'return_back'=>'Return back',
+    'verification_code'=>'Verification Code',
+    'send_verification'=>'Send Verification',
+    'action'=>'Action',
+    'code'=>'Code',
+    'expires_at'=>'Expires at',
+    'chat_name'=>'Chat name',
+    'verified'=>'Verified',
 
 ];

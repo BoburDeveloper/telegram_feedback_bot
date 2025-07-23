@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: https://www.codester.com');
+header("Access-Control-Allow-Methods: *");
+header("Access-Control-Allow-Headers: *");
+
 
 use Illuminate\Http\Request;
 
