@@ -16,7 +16,7 @@
         <div class="mb-3">
             <label for="formFile" class="form-label"><b>{{__('messages.upload_image')}}</b></label>
             <input class="form-control" type="file" name="image" id="formFile">
-            <input type="text" class="form-control" name="tbot_messaging[caption]" placeholder="{{__('messages.image_caption')}}">
+            <input type="text" class="form-control" name="tbot_messaging[caption]" placeholder="{{__('messages.image_caption')}}" maxlength="255">
         </div>
         <div class="mb-3">
             <label for="tbot_name" class="form-label"><b>{{ __('messages.text') }}</b></label>

@@ -6,7 +6,7 @@
     <div class="justify-content-between align-items-center mb-4">
 
         <div class="bg-primary text-white p-4 rounded shadow mb-4">
-            <h1 class="fw-bold"><i class="fab fa-telegram"></i> Telegram Broadcast & Feedback System</h1>
+            <h1 class="fw-bold"><i class="fab fa-telegram"></i> Telegram Broadcast & Verification & Feedback System</h1>
             <p class="mb-0">📢 1-click send feedback and get answer • 🔐 SMS-style Verification • 📩 Email notification</p>
         </div>
 

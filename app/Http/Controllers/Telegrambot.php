@@ -152,7 +152,9 @@ class Telegrambot extends Controller
         foreach (TelegraphChat::all() as $chat) {
             try {
                 $chat->photo($params['image'], $params['caption'])->send();
-                $chat->message($params['caption'])->send();
+                if(isset($params['caption'])) {
+                    $chat->message($params['caption'])->send();
+                }
                 $chat->message($params['message'])->send();
             } catch (\Throwable $e) {
                 Log::error("Failed to send to {$chat->chat_id}: " . $e->getMessage());
